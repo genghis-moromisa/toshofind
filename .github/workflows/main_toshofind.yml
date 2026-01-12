@@ -26,15 +26,21 @@ jobs:
 
       # 🛠️ Local Build Section (Optional)
       # The following section in your workflow is designed to catch build issues early on the client side, before deployment. This can be helpful for debugging and validation. However, if this step significantly increases deployment time and early detection is not critical for your workflow, you may remove this section to streamline the deployment process.
-      - name: Create and Start virtual environment and Install dependencies
+      - name: Create venv and install dependencies
         run: |
           python -m venv antenv
           source antenv/bin/activate
-          - run: pwd
-          - run: ls -la
-      - run: python -m pip install --upgrade pip
-      - run: pip install Flask gunicorn Werkzeug
-      - run: echo "WORKFLOW VERSION = 2026-01-12-OK"
+          pwd
+          ls -la
+          python -m pip install --upgrade pip
+          pip install -r home_library/requirements.txt
+
+      #- run: python -m pip install --upgrade pip
+      #- run: pip install Flask gunicorn Werkzeug
+      #- run: echo "WORKFLOW VERSION = 2026-01-12-OK"
+        #run: |
+
+
                 
       # By default, when you enable GitHub CI/CD integration through the Azure portal, the platform automatically sets the SCM_DO_BUILD_DURING_DEPLOYMENT application setting to true. This triggers the use of Oryx, a build engine that handles application compilation and dependency installation (e.g., pip install) directly on the platform during deployment. Hence, we exclude the antenv virtual environment directory from the deployment artifact to reduce the payload size. 
       - name: Upload artifact for deployment jobs
@@ -79,5 +85,6 @@ jobs:
           slot-name: 'Production'
 
           
+
 
 
